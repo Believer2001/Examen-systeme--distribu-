@@ -1,5 +1,6 @@
 package enset.ma.inventoryservice.common_api.command;
 
+import enset.ma.inventoryservice.common_api.enums.ProduitState;
 import lombok.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
@@ -14,5 +15,6 @@ public class UpdateProduitCommand {
     private  String name ;
     private  double price ;
     private  int quantity ;
+    private ProduitState state ;
 
 }

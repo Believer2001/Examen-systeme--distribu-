@@ -1,15 +1,7 @@
 package enset.ma.inventoryservice.commands.controllers;
 
-
-import enset.ma.accountservicemicroservice.common_api.command.CreateAccountCommand;
-import enset.ma.accountservicemicroservice.common_api.command.CreditAccountCommand;
-import enset.ma.accountservicemicroservice.common_api.command.DebitAccountCommand;
-import enset.ma.accountservicemicroservice.common_api.command.UpdateAccountStatusCommand;
-import enset.ma.accountservicemicroservice.common_api.dtos.CreateAccountRequestDTO;
-import enset.ma.accountservicemicroservice.common_api.dtos.CreditAccountRequestDTO;
-import enset.ma.accountservicemicroservice.common_api.dtos.DebitAccountRequestDTO;
-import enset.ma.accountservicemicroservice.common_api.dtos.UpdateStatusRequestDTO;
 import enset.ma.inventoryservice.common_api.command.CreateProduitCommand;
+import enset.ma.inventoryservice.common_api.command.DeleteProduitCommand;
 import enset.ma.inventoryservice.common_api.command.UpdateProduitCommand;
 import enset.ma.inventoryservice.common_api.dtos.CreateProduitRequestDTO;
 import enset.ma.inventoryservice.common_api.dtos.UpdateProduitRequestDTO;
@@ -47,44 +39,35 @@ public class ProduitController {
     }
 
 
-    @PostMapping("/udateProduit/{id}")
-    public CompletableFuture<String> creditAccount(@RequestBody UpdateProduitRequestDTO requestDTO){
+    @PutMapping("/udateProduit/{idProduit}")
+    public CompletableFuture<String> creditAccount( @PathVariable String idProduit,@RequestBody UpdateProduitRequestDTO requestDTO){
 
         CompletableFuture<String> result = commandGateway.send(new UpdateProduitCommand(
-                 id ,
-                requestDTO.,
-                requestDTO.getAmount(),
-                requestDTO.getCurrency()
+                idProduit,
+                requestDTO.getName(),
+                requestDTO.getPrice(),
+                requestDTO.getQuantity(),
+                requestDTO.getProduitState()
+
         ));
         return result;
     }
 
-    @PostMapping("/debit")
-    public CompletableFuture<String> debitAccount(@RequestBody DebitAccountRequestDTO requestDTO){
-        CompletableFuture<String> result= commandGateway.send(  new DebitAccountCommand(
-                requestDTO.getAccountId(),
-                requestDTO.getAmount(),
-                requestDTO.getCurrency()
-        ) );
+    @DeleteMapping
+    public CompletableFuture<String> deleteProduit( @RequestParam String idProduit){
+
+        CompletableFuture<String> result = commandGateway.send(new DeleteProduitCommand(
+                idProduit
+        ));
         return result;
     }
 
 
-    @PutMapping("/updateStatus")
-    public CompletableFuture<String> updateAccountStatus(@RequestBody UpdateStatusRequestDTO requestDTO){
-        CompletableFuture<String> result= commandGateway.send(
-                new UpdateAccountStatusCommand(
-                        requestDTO.getAccountId(),
-                        requestDTO.getStatus()
-                )
-        );
 
-        return result;
-    }
 
     @GetMapping("/eventStore/{accountId}")
-    public Stream getEvents(@PathVariable String accountId){
-        return eventStore.readEvents(accountId).asStream();
+    public Stream getEvents(@PathVariable String produitId){
+        return eventStore.readEvents(produitId).asStream();
 
     }
 
