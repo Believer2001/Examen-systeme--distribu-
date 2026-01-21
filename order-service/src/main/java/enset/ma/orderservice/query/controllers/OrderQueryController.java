@@ -1,5 +1,4 @@
 package enset.ma.orderservice.query.controllers;
-package enset.ma.orderservice.query.controllers;
 
 import enset.ma.orderservice.query.entities.Order;
 import enset.ma.orderservice.query.queries.GetAllOrders;
@@ -30,3 +29,4 @@ public class OrderQueryController {
                 ResponseTypes.instanceOf(Order.class));
     }
 }
+

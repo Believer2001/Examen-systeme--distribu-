@@ -6,15 +6,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-public class OrderLineRequestDTO {
-    private String productId;
-    private int quantity;
-    private double unitPrice;
-    private double discount;
-}
-
-@Data @AllArgsConstructor @NoArgsConstructor
 public class CreateOrderRequestDTO {
+    private String userId;
     private String shippingAddress;
     private List<OrderLineRequestDTO> orderItems;
 }

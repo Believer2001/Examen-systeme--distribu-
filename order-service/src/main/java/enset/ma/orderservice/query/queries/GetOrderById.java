@@ -1,5 +1,4 @@
 package enset.ma.orderservice.query.queries;
-package enset.ma.orderservice.query.queries;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

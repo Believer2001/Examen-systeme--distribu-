@@ -1,5 +1,4 @@
 package enset.ma.orderservice.query.entities;
-package enset.ma.orderservice.query.entities;
 
 import enset.ma.orderservice.common_api.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -21,5 +20,5 @@ public class Order {
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OrderItem> orderItems;
+    private List<OrderItems> orderItems;
 }

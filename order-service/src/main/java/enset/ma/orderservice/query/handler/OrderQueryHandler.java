@@ -1,9 +1,8 @@
 package enset.ma.orderservice.query.handler;
-package enset.ma.orderservice.query.handler;
 
 import enset.ma.orderservice.common_api.event.OrderCreatedEvent;
 import enset.ma.orderservice.query.entities.Order;
-import enset.ma.orderservice.query.entities.OrderItem;
+import enset.ma.orderservice.query.entities.OrderItems;
 import enset.ma.orderservice.query.queries.GetAllOrders;
 import enset.ma.orderservice.query.queries.GetOrderById;
 import enset.ma.orderservice.query.repository.OrderRepository;
@@ -30,13 +29,13 @@ public class OrderQueryHandler {
                 .id(event.getOrderId())
                 .orderDate(event.getOrderDate())
                 .shippingAddress(event.getShippingAddress())
-                .status(event.getStatus())
+                .status(event.getOrderStatus())
                 .orderItems(new ArrayList<>())
                 .build();
 
         // Transformation des DTOs de l'événement en Entités JPA
         event.getOrderItems().forEach(itemDto -> {
-            OrderItem item = OrderItem.builder()
+            OrderItems item = OrderItems.builder()
                     .productId(itemDto.getProductId())
                     .quantity(itemDto.getQuantity())
                     .unitPrice(itemDto.getUnitPrice())

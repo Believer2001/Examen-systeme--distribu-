@@ -1,20 +1,20 @@
 package enset.ma.orderservice.common_api.command;
 
 import enset.ma.orderservice.common_api.dtos.OrderLineRequestDTO;
-import enset.ma.orderservice.common_api.enums.OrderStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter @AllArgsConstructor @NoArgsConstructor @Builder
-public class CreateOrderCommand {
+public class CreateOrderAddCommand {
     @TargetAggregateIdentifier
-    private String orderId;
-    private String userId;
-    private String shippingAddress;
-    private List<OrderLineRequestDTO> orderItems;
+    private String orderLineId;
+    private OrderLineRequestDTO order;
+    private Date orderDate;
 
 
 }

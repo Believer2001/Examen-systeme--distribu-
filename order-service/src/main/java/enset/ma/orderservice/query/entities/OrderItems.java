@@ -1,5 +1,4 @@
 package enset.ma.orderservice.query.entities;
-package enset.ma.orderservice.query.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -7,7 +6,7 @@ import lombok.*;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
-public class OrderItem {
+public class OrderItems {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productId;

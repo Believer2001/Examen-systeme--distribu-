@@ -3,7 +3,6 @@ package enset.ma.inventoryservice.common_api.event;
 import enset.ma.inventoryservice.common_api.enums.ProduitState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.checkerframework.checker.units.qual.A;
 
 @Getter
 @AllArgsConstructor

@@ -27,13 +27,13 @@ public class ProduitAggregate {
 
 
 
-    //  construucteur san parametre obligatoirr pour axon
+    //  constructeur san parametre obligatoirr pour axon
     public ProduitAggregate() {
         // requis par axon
 
     }
 
-    //unconstucteur avec parametre pour l'initialisation des attributs de l'aggregate
+    //un constucteur avec parametre pour l'initialisation des attributs de l'aggregate
    //  c est en meme temps le handler du command CreateAccountCommand
 
     @CommandHandler
