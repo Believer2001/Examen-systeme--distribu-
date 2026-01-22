@@ -28,5 +28,7 @@ public class OrderQueryController {
         return queryGateway.query(new GetOrderById(orderId),
                 ResponseTypes.instanceOf(Order.class));
     }
+
+
 }
 

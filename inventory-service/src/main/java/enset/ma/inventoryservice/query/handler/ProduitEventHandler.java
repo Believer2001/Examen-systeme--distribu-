@@ -8,47 +8,49 @@ import enset.ma.inventoryservice.query.repository.ProduitRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.eventhandling.EventMessage;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class ProduitEventHandler {
-    private  final ProduitRepository produitRepository;
+    private final ProduitRepository produitRepository;
 
-   @EventHandler
-    public void  on(ProduitCreatedEvent event, EventMessage<ProduitUpdatedEvent> eventMessage) {
-    log.info("=============== insertiing new event accaunt {} ==================", event.getId());
+    @EventHandler
+    public void on(ProduitCreatedEvent event) {
+        log.info("Insertion d'un nouveau produit : {}", event.getId());
 
-        Produit produit= new Produit();
+        Produit produit = new Produit();
+        produit.setProduitId(event.getId()); // Utilisation de l'ID de l'event
         produit.setName(event.getName());
         produit.setPrice(event.getPrice());
         produit.setQuantity(event.getQuantity());
-        produit.setProduitId(event.getId());
-        produit.setProduitState(produit.getProduitState());
+        // Attention : vérifiez que event.getState() existe ou initialisez par défaut
+        // produit.setProduitState(event.getState());
+
         produitRepository.save(produit);
-
-
-    }
- @EventHandler
-    public  void on(ProduitUpdatedEvent event, EventMessage<ProduitUpdatedEvent> eventMessage) {
-        log.info("=======insertion activation de compte ========");
-
-
-        Produit produit= produitRepository.findById(event.getId()).get();
-
-        produit.setName(event.getName());
-        produit.setPrice(event.getPrice());
-        produit.setQuantity(event.getQuantity());
-        produit.setProduitId(event.getId());
-        produit.setProduitState(produit.getProduitState());
-        produitRepository.save(produit);
-
     }
 
+    @EventHandler
+    public void on(ProduitUpdatedEvent event) {
+        log.info("Mise à jour du produit : {}", event.getId());
 
+        if (event.getId() == null) {
+            log.error("Erreur : ID nul reçu dans ProduitUpdatedEvent");
+            return;
+        }
 
+        // Utilisation de findById de manière sécurisée
+        produitRepository.findById(event.getId()).ifPresentOrElse(produit -> {
+            produit.setName(event.getName());
+            produit.setPrice(event.getPrice());
+            produit.setQuantity(event.getQuantity());
+            // Mise à jour de l'état si nécessaire
+            produitRepository.save(produit);
+            log.info("Produit {} mis à jour avec succès", event.getId());
+        }, () -> {
+            log.warn("Produit avec l'ID {} non trouvé en base Query", event.getId());
+        });
+    }
 }
